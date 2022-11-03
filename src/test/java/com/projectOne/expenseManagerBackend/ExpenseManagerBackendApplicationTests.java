@@ -1,4 +1,4 @@
-package com.example.expenseManagerBackend;
+package com.projectOne.expenseManagerBackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

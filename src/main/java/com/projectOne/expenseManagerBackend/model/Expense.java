@@ -1,4 +1,4 @@
-package com.example.expenseManagerBackend.model;
+package com.projectOne.expenseManagerBackend.model;
 
 import lombok.Getter;
 import lombok.Setter;

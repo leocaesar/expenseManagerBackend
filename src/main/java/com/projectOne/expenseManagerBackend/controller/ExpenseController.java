@@ -1,7 +1,7 @@
-package com.example.expenseManagerBackend.controller;
+package com.projectOne.expenseManagerBackend.controller;
 
-import com.example.expenseManagerBackend.model.Expense;
-import com.example.expenseManagerBackend.repository.ExpenseRepository;
+import com.projectOne.expenseManagerBackend.model.Expense;
+import com.projectOne.expenseManagerBackend.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
-package com.example.expenseManagerBackend.repository;
+package com.projectOne.expenseManagerBackend.repository;
 
-import com.example.expenseManagerBackend.model.Expense;
+import com.projectOne.expenseManagerBackend.model.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExpenseRepository extends JpaRepository<Expense,Integer> {
