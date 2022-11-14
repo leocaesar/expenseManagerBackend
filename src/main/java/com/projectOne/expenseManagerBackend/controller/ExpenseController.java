@@ -3,10 +3,8 @@ package com.projectOne.expenseManagerBackend.controller;
 import com.projectOne.expenseManagerBackend.model.Expense;
 import com.projectOne.expenseManagerBackend.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,13 +16,34 @@ public class ExpenseController {
     ExpenseRepository expenseRepository;
 
     @GetMapping("/expenses")
+    @ResponseStatus(HttpStatus.OK)
     public List<Expense> getAllExpense(){
 
         return expenseRepository.findAll();
     }
 
     @GetMapping("/expenses/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Expense getExpense(@PathVariable("id") int id){
         return expenseRepository.findExpenseById(id);
     }
+
+     @PostMapping("/expenses")
+    @ResponseStatus(HttpStatus.OK)
+    public Expense addExpense(@RequestBody Expense expense) {
+        return expenseRepository.save(expense);
+    }
+    
+    @PutMapping("/expenses/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Expense updateExpense(@RequestBody Expense expense, @PathVariable("id") int id) {
+        return expenseRepository.save(expense);
+    }
+
+    @DeleteMapping("/expenses/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteExpense(@PathVariable("id") int id) {
+        expenseRepository.deleteById(id);
+    }
+
 }
