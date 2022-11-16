@@ -10,18 +10,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.projectOne.expenseManagerBackend.service.MyUserDetailService;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class SecurityConfiguration {
+@EnableWebMvc
+public class SecurityConfiguration extends WebMvcConfigurerAdapter {
 
-	@Bean
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
+    @Bean
     public UserDetailsService userDetailsService() {
         return new MyUserDetailService();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -31,7 +40,7 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests()
                 .mvcMatchers(HttpMethod.GET, "/**").permitAll()
-                .mvcMatchers(HttpMethod.POST,"/**").hasAnyAuthority("user")
+                .mvcMatchers(HttpMethod.POST, "/**").hasAnyAuthority("user")
                 .mvcMatchers(HttpMethod.PUT, "/**").hasAuthority("user")
                 .mvcMatchers(HttpMethod.DELETE, "/**").hasAuthority("user")
                 .anyRequest().authenticated()
@@ -41,5 +50,5 @@ public class SecurityConfiguration {
                 .logout().permitAll();
         return http.build();
     }
-	
+
 }
