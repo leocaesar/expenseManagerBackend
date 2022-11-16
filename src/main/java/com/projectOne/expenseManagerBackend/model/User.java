@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,7 +20,7 @@ public class User {
 	@Column(name = "username")
 	private String username;
 	@Column(name = "password")
-	private String password;
+	private String  password;
 	@Column(name = "role")
 	private String role;
 	@Column(name = "enabled")
@@ -39,8 +41,8 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String bCryptPasswordEncoder) {
+		this.password = bCryptPasswordEncoder;
 	}
 	public String getRole() {
 		return role;
