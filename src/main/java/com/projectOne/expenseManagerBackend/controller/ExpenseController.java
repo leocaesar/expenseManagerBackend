@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class ExpenseController {
@@ -31,6 +32,7 @@ public class ExpenseController {
      @PostMapping("/expenses")
     @ResponseStatus(HttpStatus.OK)
     public Expense addExpense(@RequestBody Expense expense) {
+        expense.setDate(new Timestamp(System.currentTimeMillis()));
         return expenseRepository.save(expense);
     }
     

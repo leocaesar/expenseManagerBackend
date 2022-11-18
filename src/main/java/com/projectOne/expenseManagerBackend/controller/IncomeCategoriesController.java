@@ -5,20 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.projectOne.expenseManagerBackend.model.IncomeCategories;
 import com.projectOne.expenseManagerBackend.repository.IncomeCategoriesRepository;
 import com.projectOne.expenseManagerBackend.service.IncomeCategoriesService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class IncomeCategoriesController {
