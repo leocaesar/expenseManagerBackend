@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class ExpenseCategoriesController {
@@ -27,7 +28,7 @@ public class ExpenseCategoriesController {
         return expenseCategoriesRepository.findExpenseCategoriesById(id);
     }
 
-     @PostMapping("/expensecategories")
+    @PostMapping("/expensecategories")
     @ResponseStatus(HttpStatus.OK)
     public ExpenseCategories addExpenseCategories(@RequestBody ExpenseCategories expenseCategories) {
         return expenseCategoriesRepository.save(expenseCategories);

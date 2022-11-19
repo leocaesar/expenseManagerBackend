@@ -1,5 +1,6 @@
 package com.projectOne.expenseManagerBackend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,18 +11,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.projectOne.expenseManagerBackend.service.MyUserDetailService;
+
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-public class SecurityConfiguration extends WebMvcConfigurerAdapter {
+public class SecurityConfiguration{
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//    	registry.addMapping("/**").allowedOrigins("*");
+//    }
+	
+	@Value("${allowed.origin}")
+	private String allowedOrigin;
+	@Bean
+	public WebMvcConfigurer getCorsConfiguration() {
+		return new WebMvcConfigurer() {
+			public void addCorsMapping(CorsRegistry registry) {
+				registry.addMapping("/**")
+				.allowedOrigins(allowedOrigin)
+				.allowedMethods("GET","POST","PUT","DELETE")
+				.allowedHeaders("*");
+			}
+		};
+	}
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -36,13 +53,16 @@ public class SecurityConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+        		.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        		.and()
                 .csrf().disable()
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests()
                 .mvcMatchers(HttpMethod.GET, "/**").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/**").hasAnyAuthority("user")
-                .mvcMatchers(HttpMethod.PUT, "/**").hasAuthority("user")
-                .mvcMatchers(HttpMethod.DELETE, "/**").hasAuthority("user")
+                .mvcMatchers(HttpMethod.POST, "/**").permitAll()
+                .mvcMatchers(HttpMethod.PUT, "/**").permitAll()
+                .mvcMatchers(HttpMethod.DELETE, "/**").permitAll()
+                //hasAuthority("user")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()

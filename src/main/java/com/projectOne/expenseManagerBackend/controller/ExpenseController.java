@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class ExpenseController {
@@ -28,7 +29,7 @@ public class ExpenseController {
         return expenseRepository.findExpenseById(id);
     }
 
-     @PostMapping("/expenses")
+    @PostMapping("/expenses")
     @ResponseStatus(HttpStatus.OK)
     public Expense addExpense(@RequestBody Expense expense) {
         return expenseRepository.save(expense);
@@ -39,7 +40,7 @@ public class ExpenseController {
     public Expense updateExpense(@RequestBody Expense expense, @PathVariable("id") int id) {
         return expenseRepository.save(expense);
     }
-
+    
     @DeleteMapping("/expenses/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteExpense(@PathVariable("id") int id) {

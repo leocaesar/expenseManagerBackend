@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectOne.expenseManagerBackend.config.SecurityConfiguration;
+import com.projectOne.expenseManagerBackend.model.AuthenticationBean;
 import com.projectOne.expenseManagerBackend.model.User;
 import com.projectOne.expenseManagerBackend.repository.UsersRepository;
 import com.projectOne.expenseManagerBackend.service.UserService;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class UserController {
@@ -36,6 +38,11 @@ public class UserController {
 	
 //	@Autowired
 //	private SecurityConfiguration securityConfiguration;
+	
+	 @GetMapping(path = "/basicauth")
+	    public AuthenticationBean basicauth() {
+	        return new AuthenticationBean("You are authenticated");
+	}
 
 	@GetMapping("/users")
 	@ResponseStatus(HttpStatus.OK)
@@ -49,7 +56,7 @@ public class UserController {
 		return usersRepository.findUserById(id);
 	}
 
-	@PostMapping("/register")
+	@PostMapping("/users")
 	@ResponseStatus(HttpStatus.OK)
 	public User addUser(@RequestBody User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
